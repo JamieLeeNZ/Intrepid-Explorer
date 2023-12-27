@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landmark Explorer Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Results for {{ city }}</h1>
+    <form action="landmarks" method="post">
+        <label for="city">Enter City:</label>
+        <input type="text" id="city" name="city" required>
+        <button type="submit" value="Submit">Explore Landmarks</button>
+    </form>
+    {% if landmarks %}
+        <ul>
+            {% for landmark in landmarks %}
+                <li>
+                    <strong>{{ landmark.name }}</strong><br>
+                    {{ landmark.kinds }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No landmarks found.</p>
+    {% endif %}
+    
+</body>
+</html>
