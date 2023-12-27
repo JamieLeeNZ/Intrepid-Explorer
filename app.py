@@ -104,6 +104,11 @@ def index():
     app.logger.debug("Rendering index.html")
     return render_template('index.html')
 
+@app.route('/about')
+def about():
+    app.logger.debug("Rendering about.html")
+    return render_template('about.html')
+
 # Define the route to handle the form submission
 @app.route('/landmarks', methods=['POST'])
 def explore_landmarks():
