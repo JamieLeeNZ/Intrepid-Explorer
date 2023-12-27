@@ -1,53 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landmark Explorer Results</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
+<!-- templates/results.html -->
+{% extends 'base.html' %}
 
-        h1 {
-            color: #333;
-        }
+{% block title %}Results for {{ city }}{% endblock %}
 
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-    </style>
-</head>
-<body>
-    <h1>Results for {{ city }}</h1>
-    <form action="landmarks" method="post">
-        <label for="city">Enter City:</label>
-        <input type="text" id="city" name="city" required>
-        <button type="submit" value="Submit">Explore Landmarks</button>
-    </form>
+{% block content %}
+    <h1 class="mt-4">Results for {{ city }}</h1>
+    {% include '_search.html' %}
     {% if landmarks %}
-        <ul>
+        <ul class="list-group mt-3">
             {% for landmark in landmarks %}
-                <li>
+                <li class="list-group-item">
                     <strong>{{ landmark.name }}</strong><br>
                     {{ landmark.kinds }}
                 </li>
             {% endfor %}
         </ul>
     {% else %}
-        <p>No landmarks found.</p>
+        <p class="mt-3">No landmarks found.</p>
     {% endif %}
-    
-</body>
-</html>
+{% endblock %}

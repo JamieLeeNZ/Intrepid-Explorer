@@ -1,10 +1,11 @@
 from config import API_KEY
 from flask import Flask, render_template, request
+from flask_bootstrap import Bootstrap
 import requests
-import logging
 
 # Initialise the Flask application
 app = Flask(__name__)
+bootstrap = Bootstrap(app)
 
 # Function to get the coordinates for a given city
 def get_coordinates(city_name, api_key="your_api_key"):
