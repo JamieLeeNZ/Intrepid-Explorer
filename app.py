@@ -1,10 +1,11 @@
 from config import API_KEY
 from flask import Flask, render_template, request
+from flask_bootstrap import Bootstrap
 import requests
-import logging
 
 # Initialise the Flask application
 app = Flask(__name__)
+bootstrap = Bootstrap(app)
 
 # Function to get the coordinates for a given city
 def get_coordinates(city_name, api_key="your_api_key"):
@@ -102,6 +103,11 @@ def filter_landmarks(city_landmarks):
 def index():
     app.logger.debug("Rendering index.html")
     return render_template('index.html')
+
+@app.route('/about')
+def about():
+    app.logger.debug("Rendering about.html")
+    return render_template('about.html')
 
 # Define the route to handle the form submission
 @app.route('/landmarks', methods=['POST'])
