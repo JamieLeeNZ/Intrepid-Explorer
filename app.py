@@ -98,6 +98,27 @@ def filter_landmarks(city_landmarks):
     # Convert the set back to a list
     return city_landmarks
 
+def format_categories(category_string):
+    # Split the input string into a list of categories
+    categories = category_string.split(',')
+
+    # List of specific categories to include
+    include_categories = [
+    "natural", "islands", "natural_springs", "geological_formations", "water", "beaches", "nature_reserves", "glaciers", "cultural", "museums", "theatres_and_entertainments", "urban_environment", "historic", "historical_places", "fortifications", "monuments_and_memorials", "archaeology", "burial_places", "religion", "historic_architecture", "skyscrapers", "bridges", "towers", "lighthouses", "industrial_facilities", "other", "amusements", "amusement_parks", "miniature_parks", "water_parks", "roller_coasters", "ferris_wheels", "other_amusement_rides", "baths_and_saunas", "sport", "winter_sports", "diving", "climbing", "surfing", "kitesurfing", "stadiums", "pools", "adult", "strip_clubs", "casino", "brothels", "nightclubs", "alcohol", "adult_hotels", "erotic_shops", "hookah", "tourist_facilities", "transport", "shops", "foods", "banks", "accommodations", "apartments", "guest_houses", "campsites", "resorts", "motels", "other_hotels", "hostels", "villas_and_chalet", "alpine_hut", "love_hotels"
+    ]
+
+    # Remove categories not in the include list
+    categories = [category for category in categories if category.lower() in include_categories]
+
+    # Capitalize every word and join them with commas, and remove underscores
+    formatted_string = ', '.join(category.replace('_', ' ').title() for category in categories)
+
+    return formatted_string
+
+def update_landmarks_kinds(landmarks):
+    for landmark in landmarks:
+        landmark['kinds'] = format_categories(landmark['kinds'])
+
 # Define the index route
 @app.route('/')
 def index():
@@ -123,8 +144,9 @@ def explore_landmarks():
     if latitude is not None and longitude is not None:
         
         # Get landmarks for the city
-        min_rating_to_search = "3"
+        min_rating_to_search = "1"
         city_landmarks = get_landmarks(latitude, longitude, api_key=api_key, min_rating=min_rating_to_search)
+        update_landmarks_kinds(city_landmarks)
         return render_template('results.html', landmarks=city_landmarks, city=city)
     else:
         return render_template('results.html', landmarks=[], city="")
